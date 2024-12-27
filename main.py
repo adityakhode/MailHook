@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from typing import List
 from pydantic import BaseModel
+from mailsender import send_notification_to_admin
 
 # Database Setup
 DATABASE_URL = "sqlite:///./database.db"
@@ -88,6 +89,10 @@ async def submit_form(
             )
             db.add(file_entry)
         db.commit()
+
+        # Send notification to admin
+        send_notification_to_admin(username, email, query)
+ 
 
         return {"message": "Form submitted successfully!", "query_id": query_entry.id}
     except Exception as e:
