@@ -1,15 +1,19 @@
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import create_engine, Column, String, Integer, ForeignKey, LargeBinary
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from typing import List
 from pydantic import BaseModel
-from mailsender import send_notification_to_admin
+from fastapi.templating import Jinja2Templates
+
+from Src.mailsender import send_notification_to_admin
+
 
 # Database Setup
-DATABASE_URL = "sqlite:///./database.db"
+DATABASE_URL = "sqlite:///./Database/database.db"
 Base = declarative_base()
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(bind=engine)
@@ -25,6 +29,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount Static Files and Templates
+app.mount("/cssFiles", StaticFiles(directory="templates/cssFiles"), name="css")
+app.mount("/assets", StaticFiles(directory="templates/assets"), name="assets")
+
+templates = Jinja2Templates(directory="templates/htmlFiles")
 
 # Models
 class User(Base):
@@ -92,7 +102,6 @@ async def submit_form(
 
         # Send notification to admin
         send_notification_to_admin(username, email, query)
- 
 
         return {"message": "Form submitted successfully!", "query_id": query_entry.id}
     except Exception as e:
@@ -107,3 +116,9 @@ def get_query(query_id: int):
         raise HTTPException(status_code=404, detail="Query not found")
     files = [file.filename for file in query.files]
     return QueryResponse(query_id=query.id, query=query.query, files=files)
+
+
+# New Route for Serving the HTML Page
+@app.get("/", response_class=HTMLResponse)
+async def serve_homepage(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
