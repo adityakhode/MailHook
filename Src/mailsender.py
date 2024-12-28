@@ -3,14 +3,14 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from fastapi import HTTPException
 
-def send_notification_to_admin(username: str, email: str, query: str):
-    # Admin email address
-    admin_email = "admin_email"
+# Admin email address
+admin_email = "admin_email"
+# Sender email credentials
+sender_email = "sender_email"
+sender_password = "sender_password"
 
-    # Sender email credentials
-    sender_email = "your email"
-    sender_password = "your password"
-
+def send_notification_to_admin(username: str, email: str, query: str, admin_email= admin_email, sender_email =sender_email, sender_password=sender_password):
+    
     # Email subject and body
     subject = "New Query Submitted"
     body = f"""
@@ -41,6 +41,3 @@ def send_notification_to_admin(username: str, email: str, query: str):
     except Exception as e:
         print(f"Failed to send email: {e}")
         raise HTTPException(status_code=500, detail="Failed to send email notification.")
-
-
-
