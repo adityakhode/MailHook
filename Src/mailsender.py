@@ -4,10 +4,10 @@ from email.mime.multipart import MIMEMultipart
 from fastapi import HTTPException
 
 # Admin email address
-admin_email = "admin_email"
+admin_email = "khodeaditya7@gmail.com"
 # Sender email credentials
-sender_email = "sender_email"
-sender_password = "sender_password"
+sender_email = "aditya_khode_entc@moderncoe.edu.in"
+sender_password = "Aditya1996"
 
 def send_notification_to_admin(username: str, email: str, query: str, admin_email= admin_email, sender_email =sender_email, sender_password=sender_password):
     
