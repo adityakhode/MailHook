@@ -1,4 +1,4 @@
 myenv/
 database.db
 __pycache__/
-
+*.env

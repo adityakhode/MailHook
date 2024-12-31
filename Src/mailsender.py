@@ -2,14 +2,12 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from fastapi import HTTPException
+from Src.loadCredentials import getCredentials
 
-# Admin email address
-admin_email = "khodeaditya7@gmail.com"
-# Sender email credentials
-sender_email = "aditya_khode_entc@moderncoe.edu.in"
-sender_password = "Aditya1996"
+#load credentials
+ADMIN_EMAIL, ADMIN_PASSWORD, MANAGER_EMAIL = getCredentials()
 
-def send_notification_to_admin(username: str, email: str, query: str, admin_email= admin_email, sender_email =sender_email, sender_password=sender_password):
+def send_notification_to_admin(username: str, email: str, query: str, MANAGER_EMAIL= MANAGER_EMAIL, ADMIN_EMAIL =ADMIN_EMAIL, ADMIN_PASSWORD=ADMIN_PASSWORD):
     
     # Email subject and body
     subject = "New Query Submitted"
@@ -26,15 +24,15 @@ def send_notification_to_admin(username: str, email: str, query: str, admin_emai
     try:
         # Set up the MIME structure
         message = MIMEMultipart()
-        message["From"] = sender_email
-        message["To"] = admin_email
+        message["From"] = ADMIN_EMAIL
+        message["To"] = MANAGER_EMAIL
         message["Subject"] = subject
         message.attach(MIMEText(body, "plain"))
 
         # Connect to the SMTP server and send the email
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
-            server.login(sender_email, sender_password)
+            server.login(ADMIN_EMAIL, ADMIN_PASSWORD)
             server.send_message(message)
 
         print("Email sent successfully!")

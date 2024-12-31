@@ -4,3 +4,4 @@ sqlalchemy==1.4.46
 pydantic==1.10.9
 python-multipart==0.0.6
 jinja2
+python-dotenv
