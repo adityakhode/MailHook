@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 
 def getCredentials():
-    load_dotenv(dotenv_path = "./config/.env-shared", verbose = True, override = True)
+    load_dotenv(dotenv_path = "./config/.env-shared", verbose = True)
     
     ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
     ADMIN_EMAIL    = os.getenv("ADMIN_EMAIL")
