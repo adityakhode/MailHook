@@ -13,10 +13,12 @@
         <h2>Submit Query and Images</h2>
         <form action="http://127.0.0.1:8000/submit/" method="POST" enctype="multipart/form-data">
             <label for="name">Your Name:</label>
-            <input type="text" id="name" name="username" required>
+            <input type="text" id="name" name="username" oninput="nameValidation()" required>
+            <span id="nameError" class="error"></span>
             <br>
             <label for="email">Your Email:</label>
-            <input type="text" id="email" name="email" required>
+            <input type="text" id="email" name="email" oninput="validateForm()" required>
+            <span id="emailError" class="error"></span>
             <br>
             <label for="query">Your Query:</label>
             <textarea id="query" name="query" rows="4" required></textarea>
@@ -24,10 +26,12 @@
             <label for="images">Upload Images:</label>
             <input type="file" id="images" name="files" accept="image/*" multiple required>
             <br>
-            <button type="submit">Submit Query and Images</button>
+            <button type="submit" id="submitButton" disabled title="Please fix the errors above to enable submission" disabled>Submit Query and Images</button>
         </form>
         <div id="message"></div>
     </div>
+
+    <script src="../jsFiles/validation.js"> </script>
 
 </body>
 </html>
