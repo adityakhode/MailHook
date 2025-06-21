@@ -76,9 +76,9 @@ The application is now deployed and accessible at: `https://<your-render-service
 2. Open `.env` and set your email credentials:
 
 ```env
-   ADMIN_EMAIL="your_admin_email@example.com"
-   ADMIN_PASSWORD="strong_password"
-   MANAGER_EMAIL="your_manager_email@example.com"
+   ADMIN_EMAIL="<sender_email@example.com>"
+   ADMIN_PASSWORD="<sender_email_password>"
+   MANAGER_EMAIL="<wo will get notification email>"
 ```
 
 3. The app will read these variables on startup to send email notifications.
