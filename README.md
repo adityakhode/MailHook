@@ -149,7 +149,7 @@ This application is deployed on [Render](https://render.com). To deploy your own
 3. Set the **Start Command** to:
 
    ```bash
-   uvicorn main:app --host 0.0.0.0 --port $PORT
+   uvicorn main:app --host 0.0.0.0 --port 80
    ```
 4. Add environment variables (`ADMIN_EMAIL`, `ADMIN_PASSWORD`, `MANAGER_EMAIL`) in the Render dashboard.
 5. Deploy and visit the provided Render URL.
